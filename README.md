@@ -25,3 +25,6 @@
     run: python hmm_old.py and get the result
 
 If the lastest result is the same as the last one, wo got the final semantic result 
+
+
+
