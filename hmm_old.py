@@ -9,8 +9,8 @@ from scipy import integrate
 import numpy as np
 from calInit import DataInit
 from update_hmm import UpdateHmm
-#data = DataInit('/home/hao/py-work/PythonHMM/test_new_int_raw.csv', (), (), [], '/home/hao/py-work/PythonHMM/test_new_rle.csv', '/home/hao/py-work/PythonHMM/test_new_symbol.csv')
-data = UpdateHmm('./test_resultraw2.log')
+data = DataInit('/home/hao/py-work/PythonHMM/test_new_int_raw.csv', (), (), [], '/home/hao/py-work/PythonHMM/test_new_rle.csv', '/home/hao/py-work/PythonHMM/test_new_symbol.csv')
+#data = UpdateHmm('./test_resultraw2.log')
 def norm_function(x, mu, std):
     return 1/(std*(2*np.pi)**0.5)*np.e**(-(x-mu)**2/(2*std**2))
 

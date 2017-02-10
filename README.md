@@ -1,59 +1,27 @@
 # PythonHMM
 
-**PythonHMM** is a python implementation of the [Hidden Markov Model](http://en.wikipedia.org/wiki/Hidden_Markov_model).
+**PythonHMM** is a python implementation of the semantic finding by using HMM model
 
 ## Usage
 
-To use **PythonHMM**, you must import the `hmm` module.
+1. clustering
+    cd Spclust
+    run: java -jar SpComputeSymbols -h for more details
+    we got the clustering result
 
-    import hmm
+2. refinement by HMM model
 
-Then, you can create an instance of `Model` by passing the states, symbols, and (optional) probability matrices.
+    use the result in clustering, change the parameters in hmm_old.py --12 line
+    data = DataInit('/home/hao/py-work/PythonHMM/test_new_int_raw.csv', (), (), [], '/home/hao/py-work/PythonHMM/test_new_rle.csv', '/home/hao/py-work/PythonHMM/test_new_symbol.csv')
 
-    states = ('rainy', 'sunny')
-    symbols = ('walk', 'shop', 'clean')
+    run: python hmm_old.py and get the result
 
-    start_prob = {
-        'rainy' : 0.5,
-        'sunny' : 0.5
-    }
+3. run: python update_hmm.py to update the parameters in HMM model
 
-    trans_prob = {
-        'rainy': { 'rainy' : 0.7, 'sunny' : 0.3 },
-        'sunny': { 'rainy' : 0.4, 'sunny' : 0.6 }
-    }
+4. refinement HMM model
+    change the parameters in hmm_old.py -- 12 line
+    data = UpdateHmm('./test_resultraw2.log')
 
-    emit_prob = {
-        'rainy': { 'walk' : 0.1, 'shop' : 0.4, 'clean' : 0.5 },
-        'sunny': { 'walk' : 0.6, 'shop' : 0.3, 'clean' : 0.1 }
-    }
+    run: python hmm_old.py and get the result
 
-    model = hmm.Model(states, symbols, start_prob, trans_prob, emit_prob)
-
-Now, you can evaluate and decode the given sequence:
-
-    sequence = ['walk', 'shop', 'clean', 'clean', 'walk', 'walk', 'walk', 'clean']
-
-    print model.evaluate(sequence)
-    print model.decode(sequence)
-
-You can also using the given sequences (a list of *(state list, symbol list)* pair) to train a model:
-
-    sequences = [
-        (state_list1, symbol_list1),
-        (state_list2, symbol_list2),
-        ...
-        (state_listN, symbol_listN),
-    ]
-
-    model = hmm.train(sequences)
-
-The `train` function also has two optional arguments, `delta` and `smoothing`.
-
-The `delta` argument (which is defaults to 0.0001) specifies that the learning algorithm will stop when the difference of the log-likelihood between two consecutive iterations is less than `delta`.
-
-The `smoothing` argument (which is defaults to 0) is the smoothing parameter of the [additive smoothing](http://en.wikipedia.org/wiki/Additive_smoothing) to avoid zero probability.
-
-## License
-
-This project is [BSD-licensed](http://www.opensource.org/licenses/BSD-3-Clause). See LICENSE file for more detail.
+If the lastest result is the same as the last one, wo got the final semantic result 
